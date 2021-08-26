@@ -90,14 +90,14 @@ const usePersonalData = () => {
   
   const setName = (name) => {
     setPersonalDataState((state) => ({
-      ..state,
+      ...state,
       name,
     }));
   };
   
   const setSurname = (surname) => {
     setPersonalDataState((state) => ({
-      ..state,
+      ...state,
       surname,
     }));
   };
@@ -140,14 +140,14 @@ const usePersonalDataState = () => {
   
   const setName = (name) => {
     setPersonalDataState((state) => ({
-      ..state,
+      ...state,
       name,
     }));
   };
   
   const setSurname = (surname) => {
     setPersonalDataState((state) => ({
-      ..state,
+      ...state,
       surname,
     }));
   };
