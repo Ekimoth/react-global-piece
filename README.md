@@ -11,6 +11,17 @@ React Global State (RGS) is a ridiculously tiny, but straight-forward mechanism 
 
 The main two gears of RGS are the `RootProvider` component and the `useGlobalState` hook, along with the entirely optional, but recommended use of the `createStatePiece` factory function.
 
+```javascript
+import {
+  RootProvider,
+  useGlobalState,
+  createStatePiece,
+} from 'react-global-state';
+```
+
+## Installation
+_Will be available on npm shortly_
+
 ## Usage
 ### `RootProvider`
 
