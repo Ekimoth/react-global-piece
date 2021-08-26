@@ -1,5 +1,5 @@
 {
-  "name": "react-global-state",
+  "name": "react-global-piece",
   "version": "0.1.0",
   "description": "A tiny mechanism for keeping and handling global state in React apps",
   "main": "./lib/cjs/index.js",
@@ -8,6 +8,7 @@
   "repository": "https://github.com/Ekimoth/react-global-state.git",
   "author": "Vladimir Dimitrovski <v.tremula@gmail.com>",
   "license": "MIT",
+  "files": ["/lib"],
   "scripts": {
     "build": "yarn build:esm && yarn build:cjs",
     "build:esm": "tsc",
