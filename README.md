@@ -9,7 +9,7 @@ React Global Piece (RGP) is a ridiculously tiny, but straight-forward mechanism 
 - Encourages having your state split into smaller pieces, closely wired with their own setters or reducers
 - Makes it easy to search through your code what piece of state is no longer needed and can safely be deleted
 
-The main two gears of RGS are the `RootProvider` component and the `useGlobalState` hook, along with the entirely optional, but recommended use of the `createStatePiece` factory function.
+The main two gears of RGP are the `RootProvider` component and the `useGlobalState` hook, along with the entirely optional, but recommended use of the `createStatePiece` factory function.
 
 ```javascript
 import {
