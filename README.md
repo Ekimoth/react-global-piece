@@ -16,7 +16,7 @@ import {
   RootProvider,
   useGlobalState,
   createStatePiece,
-} from 'react-global-state';
+} from 'react-global-piece';
 ```
 
 ## Installation
@@ -33,7 +33,7 @@ yarn add react-global-piece
 
 First you need to wrap your app with the `RootProvider` component. That's it, no props needed.
 ```javascript
-import { RootProvider } from 'react-global-state';
+import { RootProvider } from 'react-global-piece';
 
 const App = () => {
   return (
@@ -64,7 +64,7 @@ const MainApp = () => {
 
 And that's it, `personal-data` is now globally available, along with its setter function `setPersonalDataState`. Its only argument is a reducer function - again, similarly as it is with the `useState` hook.
 ```javascript
-import { useGlobalState } from 'react-global-state';
+import { useGlobalState } from 'react-global-piece';
 
 const PersonalDataInputs = () => {
   const [, setPersonalDataState] = useGlobalState('personal-data', {
@@ -145,7 +145,7 @@ const PersonalDataInputs = () => {
 #### Example 2: The `createStatePiece` factory function
 In all previous examples global state works fine as intended, but you might have noticed one thing - its initial state is set in runtime on first-run. That can also be avoided with the `createStatePiece` function, with which you give your `piece of state` an initial value before your app is rendered.
 ```javascript
-import { createStatePiece } from 'react-global-state';
+import { createStatePiece } from 'react-global-piece';
 
 const usePersonalDataPiece = createStatePiece('personal-data', {
   name: '',
