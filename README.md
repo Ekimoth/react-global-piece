@@ -166,3 +166,6 @@ const usePersonalDataState = () => {
   return [personalDataState, { setName, setSurname }];
 };
 ```
+
+### Plans for the future
+- Out-of-the-box support for class components
