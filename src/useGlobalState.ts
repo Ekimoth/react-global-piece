@@ -2,12 +2,15 @@ import { useCallback, useContext, useMemo, useRef } from 'react';
 
 import { RootContext } from './RootContext';
 import { GlobalStateActionFunction } from './types';
-import useInitialStatePiece from './useInitialStatePiece';
+import { setInitialStatePiece } from './initialRootState';
 
 export const useGlobalState = <T>(key: string, initialState: T) => {
   const keyRef = useRef(key);
 
-  const initialStateMemo = useInitialStatePiece(key, initialState);
+  const initialStateMemo = useMemo(
+    () => setInitialStatePiece(keyRef.current, initialState, true),
+    []
+  );
 
   const [{ [keyRef.current]: state = initialStateMemo }, updateGlobalState] =
     useContext(RootContext);
