@@ -1,9 +1,9 @@
-# React Global State
+# React Global Piece
 A tiny mechanism for keeping and handling global state in React apps
 
 -----------------
 
-React Global State (RGS) is a ridiculously tiny, but straight-forward mechanism for state management in React. It uses what's already there in React - `Context` and `Hooks`, and is inspired by the APIs and conveniences offered by the `useState` and the `useReducer` hooks.
+React Global Piece (RGP) is a ridiculously tiny, but straight-forward mechanism for state management in React. It uses what's already there in React - `Context` and `Hooks`, and is inspired by the APIs and conveniences offered by the `useState` and the `useReducer` hooks.
 
 - Zero boilerplate or in-advance state setup
 - Encourages having your state split into smaller pieces, closely wired with their own setters or reducers
@@ -20,7 +20,13 @@ import {
 ```
 
 ## Installation
-_Will be shortly available on npm_
+```sh
+npm install react-global-piece
+```
+or
+```sh
+yarn add react-global-piece
+```
 
 ## Usage
 ### `RootProvider`
