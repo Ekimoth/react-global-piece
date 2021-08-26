@@ -10,7 +10,7 @@ const Inputs = () => {
   const [{ names }, { addName }] = useNames();
 
   useEffect(() => {
-    addName('Vladimir');
+    addName('John');
   }, [addName]);
 
   return (

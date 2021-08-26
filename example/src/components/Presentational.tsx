@@ -9,7 +9,7 @@ const Presentational = () => {
   const [{ names, numberOfNames }, { addName }] = useNames();
 
   useEffect(() => {
-    addName('Aleksandra');
+    addName('Smith');
   }, [addName]);
 
   return (
