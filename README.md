@@ -20,7 +20,7 @@ import {
 ```
 
 ## Installation
-_Will be available on npm shortly_
+_Will be shortly available on npm_
 
 ## Usage
 ### `RootProvider`
