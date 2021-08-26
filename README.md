@@ -5,8 +5,8 @@ A tiny mechanism for keeping and handling global state in React apps
 
 React Global State (RGS) is a ridiculously tiny, but straight-forward mechanism for state management in React. It uses what's already there in React - `Context` and `Hooks`, and is inspired by the APIs and conveniences offered by the `useState` and the `useReducer` hooks.
 
-- Zero boilerplate and in-advance state setup
-- Encourages having the state split into smaller pieces
+- Zero boilerplate or in-advance state setup
+- Encourages having your state split into smaller pieces, closely wired with their own setters or reducers
 - Makes it easy to search through your code what piece of state is no longer needed and can safely be deleted
 
 The main two gears of RGS are the `RootProvider` component and the `useGlobalState` hook, along with the entirely optional, but recommended use of the `createStatePiece` factory function.
