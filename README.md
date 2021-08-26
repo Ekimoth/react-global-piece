@@ -20,7 +20,13 @@ import {
 ```
 
 ## Installation
-_Will be shortly available on npm_
+```sh
+npm install react-global-piece
+```
+or
+```sh
+yarn add react-global-piece
+```
 
 ## Usage
 ### `RootProvider`
