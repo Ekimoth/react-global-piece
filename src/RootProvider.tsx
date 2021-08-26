@@ -1,22 +1,21 @@
-import React, { ReactNode, createContext, useState, Dispatch } from 'react';
+import React, { ReactNode, useState } from 'react';
 
-type T = Record<string, any>;
-
-export const RootContext = createContext([
-  {} as T,
-  (() => {}) as Dispatch<T>,
-] as const);
+import { RootContext } from './RootContext';
+import { initialRootState } from './initialRootState';
+import { GlobalStateType } from './types';
 
 interface Props {
   children?: ReactNode;
 }
 
-const GlobalStateProvider = ({ children }: Props) => {
-  const stateHook = useState<T>({});
+const RootProvider = ({ children }: Props) => {
+  const rootStateHook = useState<GlobalStateType>(initialRootState);
 
   return (
-    <RootContext.Provider value={stateHook}>{children}</RootContext.Provider>
+    <RootContext.Provider value={rootStateHook}>
+      {children}
+    </RootContext.Provider>
   );
 };
 
-export default GlobalStateProvider;
+export default RootProvider;

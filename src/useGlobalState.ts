@@ -1,34 +1,30 @@
 import { useCallback, useContext, useMemo, useRef } from 'react';
 
-// context
-import { RootContext } from './RootProvider';
-
-// types
+import { RootContext } from './RootContext';
 import { GlobalStateActionFunction } from './types';
+import useInitialStatePiece from './useInitialStatePiece';
 
-const useGlobalState = <T>(id: string, initialState: T) => {
-  const idRef = useRef(id);
+export const useGlobalState = <T>(key: string, initialState: T) => {
+  const keyRef = useRef(key);
 
-  const initialStateRef = useRef(initialState);
+  const initialStateMemo = useInitialStatePiece(key, initialState);
 
-  const [
-    { [idRef.current]: state = initialStateRef.current },
-    updateGlobalState,
-  ] = useContext(RootContext);
+  const [{ [keyRef.current]: state = initialStateMemo }, updateGlobalState] =
+    useContext(RootContext);
 
   const updateState: GlobalStateActionFunction<T> = useCallback(
     (reducer) => {
       updateGlobalState(
         ({
-          [idRef.current]: currentState = initialStateRef.current,
+          [keyRef.current]: currentState = initialStateMemo,
           ...currentGlobalState
         }: Record<string, any>) => ({
           ...currentGlobalState,
-          [idRef.current]: reducer(currentState),
+          [keyRef.current]: reducer(currentState),
         })
       );
     },
-    [updateGlobalState]
+    [updateGlobalState, initialStateMemo]
   );
 
   return useMemo(
