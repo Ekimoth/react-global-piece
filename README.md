@@ -126,7 +126,7 @@ const PersonalDataInputs = () => {
 ```
 
 #### Example 2: The `createStatePiece` factory function
-In all previous examples global state works fine as designed, but you might have noticed one thing - it's being initialized in runtime on first-run. That can also be avoided with the `createStatePiece` function:
+In all previous examples global state works fine as intended, but you might have noticed one thing - its initial state is set in runtime on first-run. That can also be avoided with the `createStatePiece` function, with which you give your `piece of state` an initial value before your app is rendered.
 ```javascript
 import { createStatePiece } from 'react-global-state';
 
