@@ -143,9 +143,9 @@ class MyClassComponent extends PureComponent {
   };
 }
 
-export default withGlobalState(MyClassComponent, (ownProps) => {
+export default withGlobalState(MyClassComponent, (ownProps) => ({
   personalDataHook: usePersonalDataPiece(),
-});
+}));
 ```
 
 #### Example
