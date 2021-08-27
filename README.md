@@ -121,10 +121,6 @@ You still have some `class component` that isn't going to be converted to `funct
 
 ```javascript
 class MyClassComponent extends PureComponent {
-  componentDidMount() {
-    const { personalDataHook } = this.props;
-  }
-  
   onChange = ({ target: { name, value } }) => {
     const { personalDataHook: [, setPersonalDataState] } = this.props;
   
