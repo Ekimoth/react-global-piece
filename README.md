@@ -153,7 +153,7 @@ export default withGlobalState(MyClassComponent, (ownProps) => {
 ```
 
 #### Example
-Let's now see how we can use what we learned. Let's create the following hook named `usePersonalData`.
+Let's now see how we can use what we learned.
 
 ```javascript
 import { createStatePiece } from 'react-global-piece';
