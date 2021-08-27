@@ -6,10 +6,10 @@ import useNames from 'state-hooks/useNames';
 const Presentational = () => {
   const [{ name, email }] = useAuth();
   const [{ hasAccess }] = useAccess();
-  const [{ names, numberOfNames }, { addName }] = useNames();
+  const [{ names, numberOfNames }, { addName }] = useNames('Smith');
 
   useEffect(() => {
-    addName('Smith');
+    addName();
   }, [addName]);
 
   return (

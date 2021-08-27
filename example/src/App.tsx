@@ -1,13 +1,15 @@
-import { RootProvider } from 'react-global-state';
+import { RootProvider } from 'react-global-piece';
 
 import Inputs from 'components/Inputs';
 import Presentational from 'components/Presentational';
+import MyClassComponent from 'components/MyClassComponent';
 
 function App() {
   return (
     <RootProvider>
       <Inputs />
       <Presentational />
+      <MyClassComponent name="Romeo" />
     </RootProvider>
   );
 }

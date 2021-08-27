@@ -1,4 +1,4 @@
-import { createStatePiece } from 'react-global-state';
+import { createStatePiece } from 'react-global-piece';
 import { useCallback, useMemo } from 'react';
 
 const useNamesPiece = createStatePiece('number', 0);

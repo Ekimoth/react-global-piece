@@ -1,5 +1,5 @@
 import { useCallback, useMemo } from 'react';
-import { createStatePiece } from 'react-global-state';
+import { createStatePiece } from 'react-global-piece';
 
 const useAccessPiece = createStatePiece('access', {
   hasAccess: false,

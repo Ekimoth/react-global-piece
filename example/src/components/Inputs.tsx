@@ -7,10 +7,10 @@ import useNames from 'state-hooks/useNames';
 const Inputs = () => {
   const [{ name, email, isAdmin }, { setName, setEmail }] = useAuth();
   const [, { toggleAccess }] = useAccess();
-  const [{ names }, { addName }] = useNames();
+  const [{ names }, { addName }] = useNames('John');
 
   useEffect(() => {
-    addName('John');
+    addName();
   }, [addName]);
 
   return (
