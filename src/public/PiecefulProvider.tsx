@@ -19,11 +19,11 @@ const PiecefulProvider = ({
 }: Props) => {
   const { Provider, defaultContextState } = usePiecefulContext(region);
 
-  const [state, setState] = useState<ContextStateType>(
+  const contextStateHook = useState<ContextStateType>(
     initialContextState || defaultContextState
   );
 
-  return <Provider value={[state, setState]}>{children}</Provider>;
+  return <Provider value={contextStateHook}>{children}</Provider>;
 };
 
 export default PiecefulProvider;
