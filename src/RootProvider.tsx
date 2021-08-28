@@ -1,21 +1,29 @@
 import React, { ReactNode, useState } from 'react';
+import { useEffect } from 'react';
 
-import { RootContext } from './RootContext';
-import { initialRootState } from './initialRootState';
 import { GlobalStateType } from './types';
+import usePiecefulContext from './usePiecefulContext';
 
 interface Props {
   children?: ReactNode;
+  contextKey?: string;
+  initialState?: any;
 }
 
-const RootProvider = ({ children }: Props) => {
-  const rootStateHook = useState<GlobalStateType>(initialRootState);
-
-  return (
-    <RootContext.Provider value={rootStateHook}>
-      {children}
-    </RootContext.Provider>
+const RootProvider = ({
+  children,
+  contextKey,
+  initialState: initialRuntimeState,
+}: Props) => {
+  const { Provider, initialStaticState } = usePiecefulContext(
+    contextKey ? `_${contextKey}` : 'root'
   );
+
+  const [state, setState] = useState<GlobalStateType>(
+    initialRuntimeState || initialStaticState
+  );
+
+  return <Provider value={[state, setState]}>{children}</Provider>;
 };
 
 export default RootProvider;

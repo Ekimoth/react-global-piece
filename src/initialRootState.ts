@@ -1,24 +1,28 @@
-import { GlobalStateType } from './types';
-
-export const initialRootState: GlobalStateType = {};
+import { contexts } from './usePiecefulContext';
 
 export const setInitialStatePiece = <T>(
-  key: string,
+  contextKey: string,
+  pieceKey: string,
   value: T,
   suppressError = false
 ) => {
-  if (Object.prototype.hasOwnProperty.call(initialRootState, key)) {
-    if (initialRootState[key] !== value && !suppressError) {
+  const initialRootState = contexts[contextKey]?.[1] || {};
+
+  if (
+    initialRootState &&
+    Object.prototype.hasOwnProperty.call(initialRootState, pieceKey)
+  ) {
+    if (initialRootState[pieceKey] !== value && !suppressError) {
       console.error(
-        `There is already a state piece created with the key "${key}". New state piece was not created.`,
+        `There is already a state piece created with the key "${pieceKey}". New state piece was not created.`,
         value
       );
     }
 
-    return initialRootState[key] as T;
+    return initialRootState[pieceKey] as T;
   }
 
-  initialRootState[key] = value;
+  initialRootState[pieceKey] = value;
 
   return value;
 };

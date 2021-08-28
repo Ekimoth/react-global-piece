@@ -1,33 +1,38 @@
-import { useCallback, useContext, useMemo, useRef } from 'react';
+import { useCallback, useMemo } from 'react';
 
-import { RootContext } from './RootContext';
 import { GlobalStateActionFunction } from './types';
 import { setInitialStatePiece } from './initialRootState';
+import usePiecefulContext from './usePiecefulContext';
+import splitKeys from './splitKeys';
 
 export const useGlobalState = <T>(key: string, initialState: T) => {
-  const keyRef = useRef(key);
+  const [contextKey, pieceKey] = useMemo(() => splitKeys(key), []);
 
   const initialStateMemo = useMemo(
-    () => setInitialStatePiece(keyRef.current, initialState, true),
+    () => setInitialStatePiece(contextKey, pieceKey, initialState, true),
     []
   );
 
-  const [{ [keyRef.current]: state = initialStateMemo }, updateGlobalState] =
-    useContext(RootContext);
+  const {
+    currentContextState: [
+      { [pieceKey]: state = initialStateMemo },
+      updateGlobalState,
+    ],
+  } = usePiecefulContext(contextKey);
 
   const updateState: GlobalStateActionFunction<T> = useCallback(
     (reducer) => {
       updateGlobalState(
         ({
-          [keyRef.current]: currentState = initialStateMemo,
+          [pieceKey]: currentState = initialStateMemo,
           ...currentGlobalState
         }: Record<string, any>) => ({
           ...currentGlobalState,
-          [keyRef.current]: reducer(currentState),
+          [pieceKey]: reducer(currentState),
         })
       );
     },
-    [updateGlobalState, initialStateMemo]
+    [updateGlobalState, initialStateMemo, pieceKey]
   );
 
   return useMemo(
