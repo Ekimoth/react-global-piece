@@ -7,7 +7,8 @@ import {
   Context,
 } from 'react';
 
-import { GlobalStateType } from './types';
+// types
+import { GlobalStateType } from '../types';
 
 const createNewContext = () =>
   createContext([{}, () => {}] as [GlobalStateType, Dispatch<GlobalStateType>]);
@@ -16,26 +17,26 @@ export const contexts: Record<string, [Context<any>, GlobalStateType]> = {
   root: [createNewContext(), {}],
 };
 
-const usePiecefulContext = (contextKey: string) => {
+const usePiecefulContext = (region: string) => {
   const [ContextInstance, initialStaticState] = useMemo(() => {
-    if (contexts[contextKey]) {
-      return contexts[contextKey];
+    if (contexts[region]) {
+      return contexts[region];
     }
 
     const newContext = createNewContext();
 
-    contexts[contextKey] = [newContext, {} as GlobalStateType];
+    contexts[region] = [newContext, {} as GlobalStateType];
 
-    return contexts[contextKey];
-  }, [contextKey]);
+    return contexts[region];
+  }, [region]);
 
   const currentContextState = useContext(ContextInstance);
 
   useEffect(
     () => () => {
-      delete contexts[contextKey];
+      delete contexts[region];
     },
-    [contextKey]
+    [region]
   );
 
   return useMemo(

@@ -1,15 +1,22 @@
 import { useCallback, useMemo } from 'react';
 
-import { GlobalStateActionFunction } from './types';
-import { setInitialStatePiece } from './defaultPiecefulState';
-import usePiecefulContext from './usePiecefulContext';
-import splitKeys from './splitKeys';
+// types
+import { GlobalStateActionFunction } from '../types';
+
+// helpers
+import { setInitialStatePiece } from '../helpers/defaultPiecefulState';
+
+// hooks
+import usePiecefulContext from '../hooks/usePiecefulContext';
+
+// utils
+import splitKeys from '../utils/splitKeys';
 
 export const useStatePiece = <T>(key: string, initialState: T) => {
-  const [contextKey, pieceKey] = useMemo(() => splitKeys(key), []);
+  const [region, pieceKey] = useMemo(() => splitKeys(key), []);
 
   const initialStateMemo = useMemo(
-    () => setInitialStatePiece(contextKey, pieceKey, initialState, true),
+    () => setInitialStatePiece(region, pieceKey, initialState, true),
     []
   );
 
@@ -18,7 +25,7 @@ export const useStatePiece = <T>(key: string, initialState: T) => {
       { [pieceKey]: state = initialStateMemo },
       updateGlobalState,
     ],
-  } = usePiecefulContext(contextKey);
+  } = usePiecefulContext(region);
 
   const updateState: GlobalStateActionFunction<T> = useCallback(
     (reducer) => {

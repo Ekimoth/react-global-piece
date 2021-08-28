@@ -1,12 +1,13 @@
-import { contexts } from './usePiecefulContext';
+// static
+import { contexts } from '../hooks/usePiecefulContext';
 
 export const setInitialStatePiece = <T>(
-  contextKey: string,
+  region: string,
   pieceKey: string,
   value: T,
   suppressError = false
 ) => {
-  const initialRootState = contexts[contextKey]?.[1] || {};
+  const initialRootState = contexts[region]?.[1] || {};
 
   if (
     initialRootState &&
