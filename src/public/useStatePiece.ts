@@ -4,48 +4,53 @@ import { useCallback, useMemo } from 'react';
 import { GlobalStateActionFunction } from '../types';
 
 // helpers
-import { setInitialStatePiece } from '../helpers/defaultPiecefulState';
+import { setAndReturnBaseDefaultState } from '../contexts';
 
 // hooks
 import usePiecefulContext from '../hooks/usePiecefulContext';
 
 // utils
-import splitKeys from '../utils/splitKeys';
+import splitKey from '../utils/splitKey';
 
-export const useStatePiece = <T>(key: string, initialState: T) => {
-  const [region, pieceKey] = useMemo(() => splitKeys(key), []);
-
-  const initialStateMemo = useMemo(
-    () => setInitialStatePiece(region, pieceKey, initialState, true),
+export const useBaseState = <T>(
+  region: string,
+  base: string,
+  defaultState: T
+) => {
+  const defaultStateMemo = useMemo(
+    () => setAndReturnBaseDefaultState(region, base, defaultState, true),
     []
   );
 
   const {
-    currentContextState: [
-      { [pieceKey]: state = initialStateMemo },
-      updateGlobalState,
-    ],
+    currentContextState: [{ [base]: state = defaultStateMemo }, setState],
   } = usePiecefulContext(region);
 
   const updateState: GlobalStateActionFunction<T> = useCallback(
     (reducer) => {
-      updateGlobalState(
+      setState(
         ({
-          [pieceKey]: currentState = initialStateMemo,
-          ...currentGlobalState
+          [base]: currentBaseState = defaultStateMemo,
+          ...contextState
         }: Record<string, any>) => ({
-          ...currentGlobalState,
-          [pieceKey]: reducer(currentState),
+          ...contextState,
+          [base]: reducer(currentBaseState),
         })
       );
     },
-    [updateGlobalState, initialStateMemo, pieceKey]
+    [setState, defaultStateMemo, base]
   );
 
   return useMemo(
     () => [state as T, updateState] as const,
     [state, updateState]
   );
+};
+
+const useStatePiece = <T>(key: string, defaultState: T) => {
+  const [region, base] = splitKey(key);
+
+  return useBaseState(region, base, defaultState);
 };
 
 export default useStatePiece;

@@ -1,51 +1,22 @@
-import {
-  useMemo,
-  useContext,
-  createContext,
-  Dispatch,
-  useEffect,
-  Context,
-} from 'react';
+import { useMemo, useContext } from 'react';
 
-// types
-import { GlobalStateType } from '../types';
-
-const createNewContext = () =>
-  createContext([{}, () => {}] as [GlobalStateType, Dispatch<GlobalStateType>]);
-
-export const contexts: Record<string, [Context<any>, GlobalStateType]> = {
-  root: [createNewContext(), {}],
-};
+import { getContext } from '../contexts';
 
 const usePiecefulContext = (region: string) => {
-  const [ContextInstance, initialStaticState] = useMemo(() => {
-    if (contexts[region]) {
-      return contexts[region];
-    }
-
-    const newContext = createNewContext();
-
-    contexts[region] = [newContext, {} as GlobalStateType];
-
-    return contexts[region];
-  }, [region]);
-
-  const currentContextState = useContext(ContextInstance);
-
-  useEffect(
-    () => () => {
-      delete contexts[region];
-    },
+  const [ContextInstance, defaultContextState] = useMemo(
+    () => getContext(region),
     [region]
   );
+
+  const currentContextState = useContext(ContextInstance);
 
   return useMemo(
     () => ({
       Provider: ContextInstance.Provider,
-      initialStaticState,
+      defaultContextState,
       currentContextState,
     }),
-    [ContextInstance, initialStaticState, currentContextState]
+    [ContextInstance, defaultContextState, currentContextState]
   );
 };
 

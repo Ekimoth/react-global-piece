@@ -6,9 +6,8 @@ const withPieceful =
     useHooks: (ownProps: OwnProps) => HooksProps
   ): ComponentType<OwnProps> =>
   (ownProps) => {
-    const hooksResults = useHooks(ownProps);
-
-    return <Component {...ownProps} {...hooksResults} />;
+    const hooksOutputs = useHooks(ownProps);
+    return <Component {...ownProps} {...hooksOutputs} />;
   };
 
 export default withPieceful;

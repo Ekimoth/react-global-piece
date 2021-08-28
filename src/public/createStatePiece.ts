@@ -1,22 +1,22 @@
 // hooks
-import { useStatePiece } from './useStatePiece';
+import { useBaseState } from './useStatePiece';
 
 // helpers
-import { setInitialStatePiece } from '../helpers/defaultPiecefulState';
+import { setAndReturnBaseDefaultState } from '../contexts';
 
 // utils
-import splitKeys from '../utils/splitKeys';
+import splitKey from '../utils/splitKey';
 
-const createStatePiece = <T>(key: string, initialState: T) => {
-  const [region, pieceKey] = splitKeys(key);
+const createStatePiece = <T>(key: string, defaultBaseState: T) => {
+  const [region, base] = splitKey(key);
 
-  const stableInitialState = setInitialStatePiece(
+  const stableInitialState = setAndReturnBaseDefaultState<T>(
     region,
-    pieceKey,
-    initialState
+    base,
+    defaultBaseState
   );
 
-  return () => useStatePiece(key, stableInitialState);
+  return () => useBaseState<T>(region, base, stableInitialState);
 };
 
 export default createStatePiece;

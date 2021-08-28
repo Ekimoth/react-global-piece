@@ -1,7 +1,7 @@
 import React, { ReactNode, useState } from 'react';
 
 // types
-import { GlobalStateType } from '../types';
+import { ContextStateType } from '../types';
 
 // hooks
 import usePiecefulContext from '../hooks/usePiecefulContext';
@@ -9,20 +9,18 @@ import usePiecefulContext from '../hooks/usePiecefulContext';
 interface Props {
   children?: ReactNode;
   region?: string;
-  initialState?: any;
+  initialState?: Record<string, any>;
 }
 
 const PiecefulProvider = ({
   children,
-  region,
-  initialState: initialRuntimeState,
+  region = 'root',
+  initialState: initialContextState,
 }: Props) => {
-  const { Provider, initialStaticState } = usePiecefulContext(
-    region ? `_${region}` : 'root'
-  );
+  const { Provider, defaultContextState } = usePiecefulContext(region);
 
-  const [state, setState] = useState<GlobalStateType>(
-    initialRuntimeState || initialStaticState
+  const [state, setState] = useState<ContextStateType>(
+    initialContextState || defaultContextState
   );
 
   return <Provider value={[state, setState]}>{children}</Provider>;

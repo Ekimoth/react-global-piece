@@ -1,7 +1,7 @@
-export type GlobalStateType<T = Record<string, any>> = T;
+export type ContextStateType<T = Record<string, any>> = T;
 
-type GlobalStateReducer<T = GlobalStateType> = (currentState: T) => T;
+type ContextReducer<T = ContextStateType> = (currentState: T) => T;
 
-export type GlobalStateActionFunction<T = GlobalStateType> = (
-  fn: GlobalStateReducer<T>
+export type GlobalStateActionFunction<T = ContextStateType> = (
+  fn: ContextReducer<T>
 ) => void;
