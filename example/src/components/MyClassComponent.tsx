@@ -1,5 +1,5 @@
 import { PureComponent } from 'react';
-import { withGlobalState } from 'react-pieceful-state';
+import { withPieceful } from 'react-pieceful-state';
 
 import useNames from 'state-hooks/useNames';
 import useNumber from 'state-hooks/useNumber';
@@ -41,4 +41,4 @@ class MyClassComponent extends PureComponent<Props> {
   }
 }
 
-export default withGlobalState(MyClassComponent, useHooks);
+export default withPieceful(MyClassComponent, useHooks);

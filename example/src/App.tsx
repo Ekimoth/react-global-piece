@@ -1,4 +1,4 @@
-import { RootProvider } from 'react-pieceful-state';
+import { PiecefulProvider } from 'react-pieceful-state';
 
 import Inputs from 'components/Inputs';
 import Presentational from 'components/Presentational';
@@ -6,11 +6,11 @@ import MyClassComponent from 'components/MyClassComponent';
 
 function App() {
   return (
-    <RootProvider>
+    <PiecefulProvider>
       <Inputs />
       <Presentational />
       <MyClassComponent name="Romeo" />
-    </RootProvider>
+    </PiecefulProvider>
   );
 }
 
