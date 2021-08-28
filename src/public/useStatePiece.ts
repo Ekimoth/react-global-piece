@@ -10,33 +10,45 @@ import { setAndReturnBaseDefaultState } from '../static/contexts';
 import usePiecefulContext from '../hooks/usePiecefulContext';
 
 const useStatePiece = <T>(base: string, defaultState: T, region = 'root') => {
+  const [baseMemo, regionMemo] = useMemo(() => [base, region], []);
+
   const defaultStateMemo = useMemo(
-    () => setAndReturnBaseDefaultState(region, base, defaultState, true),
+    () => setAndReturnBaseDefaultState(regionMemo, base, defaultState, true),
     []
   );
 
   const {
-    currentContextState: [{ [base]: state = defaultStateMemo }, setState],
-  } = usePiecefulContext(region);
+    currentContextState: [{ [baseMemo]: state = defaultStateMemo }, setState],
+  } = usePiecefulContext(regionMemo);
 
   const updateState: GlobalStateActionFunction<T> = useCallback(
     (reducer) => {
       setState(
         ({
-          [base]: currentBaseState = defaultStateMemo,
+          [baseMemo]: currentBaseState = defaultStateMemo,
           ...contextState
         }: Record<string, any>) => ({
           ...contextState,
-          [base]: reducer(currentBaseState),
+          [baseMemo]: reducer(currentBaseState),
         })
       );
     },
-    [setState, defaultStateMemo, base]
+    [setState, defaultStateMemo, baseMemo]
+  );
+
+  const resetState: GlobalStateActionFunction<T, void> = useCallback(
+    (reducer) => {
+      setState((contextState: Record<string, any>) => ({
+        ...contextState,
+        [baseMemo]: reducer?.(defaultStateMemo) || defaultStateMemo,
+      }));
+    },
+    [setState, defaultStateMemo, baseMemo]
   );
 
   return useMemo(
-    () => [state as T, updateState] as const,
-    [state, updateState]
+    () => [state as T, updateState, resetState] as const,
+    [state, updateState, resetState]
   );
 };
 
