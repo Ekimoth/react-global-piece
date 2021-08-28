@@ -1,22 +1,15 @@
 import { useCallback, useMemo } from 'react';
 
 // types
-import { GlobalStateActionFunction } from 'types';
+import { GlobalStateActionFunction } from '../types';
 
 // helpers
-import { setAndReturnBaseDefaultState } from 'contexts';
+import { setAndReturnBaseDefaultState } from '../static/contexts';
 
 // hooks
-import usePiecefulContext from 'hooks/usePiecefulContext';
+import usePiecefulContext from '../hooks/usePiecefulContext';
 
-// utils
-import splitKey from 'utils/splitKey';
-
-export const useBaseState = <T>(
-  region: string,
-  base: string,
-  defaultState: T
-) => {
+const useStatePiece = <T>(base: string, defaultState: T, region = 'root') => {
   const defaultStateMemo = useMemo(
     () => setAndReturnBaseDefaultState(region, base, defaultState, true),
     []
@@ -45,12 +38,6 @@ export const useBaseState = <T>(
     () => [state as T, updateState] as const,
     [state, updateState]
   );
-};
-
-const useStatePiece = <T>(key: string, defaultState: T) => {
-  const [region, base] = splitKey(key);
-
-  return useBaseState(region, base, defaultState);
 };
 
 export default useStatePiece;
