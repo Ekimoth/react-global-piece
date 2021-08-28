@@ -1,7 +1,7 @@
 import { createContext, Dispatch, Context } from 'react';
 
 // types
-import { ContextStateType } from '../types';
+import { ContextStateType } from 'types';
 
 const createNewContext = () =>
   createContext([{}, () => {}] as [

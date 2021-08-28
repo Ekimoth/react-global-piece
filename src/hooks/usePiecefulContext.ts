@@ -1,6 +1,7 @@
 import { useMemo, useContext } from 'react';
 
-import { getContext } from '../contexts';
+// helpers
+import { getContext } from 'contexts';
 
 const usePiecefulContext = (region: string) => {
   const [ContextInstance, defaultContextState] = useMemo(

@@ -1,16 +1,16 @@
 import { useCallback, useMemo } from 'react';
 
 // types
-import { GlobalStateActionFunction } from '../types';
+import { GlobalStateActionFunction } from 'types';
 
 // helpers
-import { setAndReturnBaseDefaultState } from '../contexts';
+import { setAndReturnBaseDefaultState } from 'contexts';
 
 // hooks
-import usePiecefulContext from '../hooks/usePiecefulContext';
+import usePiecefulContext from 'hooks/usePiecefulContext';
 
 // utils
-import splitKey from '../utils/splitKey';
+import splitKey from 'utils/splitKey';
 
 export const useBaseState = <T>(
   region: string,

@@ -1,11 +1,11 @@
 // hooks
-import { useBaseState } from './useStatePiece';
+import { useBaseState } from 'public/useStatePiece';
 
 // helpers
-import { setAndReturnBaseDefaultState } from '../contexts';
+import { setAndReturnBaseDefaultState } from 'contexts';
 
 // utils
-import splitKey from '../utils/splitKey';
+import splitKey from 'utils/splitKey';
 
 const createStatePiece = <T>(key: string, defaultBaseState: T) => {
   const [region, base] = splitKey(key);

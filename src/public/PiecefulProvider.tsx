@@ -1,10 +1,10 @@
 import React, { ReactNode, useState } from 'react';
 
 // types
-import { ContextStateType } from '../types';
+import { ContextStateType } from 'types';
 
 // hooks
-import usePiecefulContext from '../hooks/usePiecefulContext';
+import usePiecefulContext from 'hooks/usePiecefulContext';
 
 interface Props {
   children?: ReactNode;
