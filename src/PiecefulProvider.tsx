@@ -1,5 +1,4 @@
 import React, { ReactNode, useState } from 'react';
-import { useEffect } from 'react';
 
 import { GlobalStateType } from './types';
 import usePiecefulContext from './usePiecefulContext';
@@ -10,7 +9,7 @@ interface Props {
   initialState?: any;
 }
 
-const RootProvider = ({
+const PiecefulProvider = ({
   children,
   contextKey,
   initialState: initialRuntimeState,
@@ -26,4 +25,4 @@ const RootProvider = ({
   return <Provider value={[state, setState]}>{children}</Provider>;
 };
 
-export default RootProvider;
+export default PiecefulProvider;

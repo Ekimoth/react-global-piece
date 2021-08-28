@@ -1,4 +1,4 @@
-export { default as RootProvider } from './RootProvider';
-export { default as useGlobalState } from './useGlobalState';
+export { default as PiecefulProvider } from './PiecefulProvider';
+export { default as useStatePiece } from './useStatePiece';
 export { default as createStatePiece } from './createStatePiece';
-export { default as withGlobalState } from './withGlobalState';
+export { default as withPieceful } from './withPieceful';

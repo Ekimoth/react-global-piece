@@ -1,6 +1,6 @@
 import React, { ComponentType } from 'react';
 
-const withGlobalState =
+const withPieceful =
   <OwnProps, HooksProps>(
     Component: ComponentType<OwnProps & HooksProps>,
     useHooks: (ownProps: OwnProps) => HooksProps
@@ -11,4 +11,4 @@ const withGlobalState =
     return <Component {...ownProps} {...hooksResults} />;
   };
 
-export default withGlobalState;
+export default withPieceful;

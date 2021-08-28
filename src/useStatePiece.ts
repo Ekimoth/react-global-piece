@@ -1,11 +1,11 @@
 import { useCallback, useMemo } from 'react';
 
 import { GlobalStateActionFunction } from './types';
-import { setInitialStatePiece } from './initialRootState';
+import { setInitialStatePiece } from './defaultPiecefulState';
 import usePiecefulContext from './usePiecefulContext';
 import splitKeys from './splitKeys';
 
-export const useGlobalState = <T>(key: string, initialState: T) => {
+export const useStatePiece = <T>(key: string, initialState: T) => {
   const [contextKey, pieceKey] = useMemo(() => splitKeys(key), []);
 
   const initialStateMemo = useMemo(
@@ -41,4 +41,4 @@ export const useGlobalState = <T>(key: string, initialState: T) => {
   );
 };
 
-export default useGlobalState;
+export default useStatePiece;

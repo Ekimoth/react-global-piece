@@ -1,5 +1,5 @@
-import { useGlobalState } from './useGlobalState';
-import { setInitialStatePiece } from './initialRootState';
+import { useStatePiece } from './useStatePiece';
+import { setInitialStatePiece } from './defaultPiecefulState';
 import splitKeys from './splitKeys';
 
 const createStatePiece = <T>(key: string, initialState: T) => {
@@ -11,7 +11,7 @@ const createStatePiece = <T>(key: string, initialState: T) => {
     initialState
   );
 
-  return () => useGlobalState(key, stableInitialState);
+  return () => useStatePiece(key, stableInitialState);
 };
 
 export default createStatePiece;
