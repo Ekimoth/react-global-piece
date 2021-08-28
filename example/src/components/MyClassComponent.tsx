@@ -1,5 +1,5 @@
 import { PureComponent } from 'react';
-import { withGlobalState } from 'react-global-piece';
+import { withGlobalState } from 'react-pieceful-state';
 
 import useNames from 'state-hooks/useNames';
 import useNumber from 'state-hooks/useNumber';

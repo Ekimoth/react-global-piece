@@ -1,5 +1,5 @@
 import { useCallback, useMemo } from 'react';
-import { createStatePiece } from 'react-global-piece';
+import { createStatePiece } from 'react-pieceful-state';
 
 const useAuthPiece = createStatePiece('auth', {
   name: '',

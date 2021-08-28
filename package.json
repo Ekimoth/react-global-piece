@@ -1,7 +1,7 @@
 {
-  "name": "react-global-piece",
+  "name": "react-pieceful-state",
   "version": "0.2.1",
-  "description": "A tiny mechanism for keeping and handling global state in React apps",
+  "description": "A ridiculously tiny library for global and regional state management in React",
   "main": "./lib/cjs/index.js",
   "module": "./lib/esm/index.js",
   "types": "./lib/esm/index.d.ts",

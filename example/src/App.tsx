@@ -1,4 +1,4 @@
-import { RootProvider } from 'react-global-piece';
+import { RootProvider } from 'react-pieceful-state';
 
 import Inputs from 'components/Inputs';
 import Presentational from 'components/Presentational';

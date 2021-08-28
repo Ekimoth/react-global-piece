@@ -1,4 +1,4 @@
-import { createStatePiece } from 'react-global-piece';
+import { createStatePiece } from 'react-pieceful-state';
 import { useCallback, useMemo } from 'react';
 
 import useNumber from './useNumber';
