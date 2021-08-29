@@ -1,49 +1,55 @@
-import { useCallback, useMemo } from 'react';
+import { useCallback, useMemo, useRef } from 'react';
 
 // types
 import { GlobalStateActionFunction } from '../types';
 
 // helpers
-import { setAndReturnBaseDefaultState } from '../static/contexts';
+import { makeBaseDefaultState } from '../static/contexts';
 
 // hooks
 import usePiecefulContext from '../hooks/usePiecefulContext';
 
 const useStatePiece = <T>(base: string, defaultState: T, region = 'root') => {
-  const [baseMemo, regionMemo] = useMemo(() => [base, region], []);
+  const regionRef = useRef(region);
+  const baseRef = useRef(base);
 
-  const defaultStateMemo = useMemo(
-    () => setAndReturnBaseDefaultState(regionMemo, base, defaultState, true),
-    []
+  const defaultStateFactoryRef = useRef(() =>
+    makeBaseDefaultState<T>(regionRef.current, base, defaultState, true)
   );
 
   const {
-    currentContextState: [{ [baseMemo]: state = defaultStateMemo }, setState],
-  } = usePiecefulContext(regionMemo);
+    currentContextState: [
+      { [baseRef.current]: state = defaultStateFactoryRef.current() },
+      setState,
+    ],
+  } = usePiecefulContext(regionRef.current);
 
   const updateState: GlobalStateActionFunction<T> = useCallback(
     (reducer) => {
       setState(
         ({
-          [baseMemo]: currentBaseState = defaultStateMemo,
+          [baseRef.current]:
+            currentBaseState = defaultStateFactoryRef.current(),
           ...contextState
         }) => ({
           ...contextState,
-          [baseMemo]: reducer(currentBaseState),
+          [baseRef.current]: reducer(currentBaseState),
         })
       );
     },
-    [setState, defaultStateMemo, baseMemo]
+    [setState]
   );
 
   const resetState: GlobalStateActionFunction<T, void> = useCallback(
     (reducer) => {
       setState((contextState) => ({
         ...contextState,
-        [baseMemo]: reducer?.(defaultStateMemo) || defaultStateMemo,
+        [baseRef.current]:
+          reducer?.(defaultStateFactoryRef.current()) ||
+          defaultStateFactoryRef.current(),
       }));
     },
-    [setState, defaultStateMemo, baseMemo]
+    [setState]
   );
 
   return useMemo(

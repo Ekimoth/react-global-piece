@@ -33,7 +33,7 @@ export const getContextDefaultState = (region: string) => {
   return defaultState;
 };
 
-export const setAndReturnBaseDefaultState = <T = ContextStateType>(
+export const makeBaseDefaultState = <T = ContextStateType>(
   region: string,
   base: string,
   defaultBaseState: T,
@@ -49,5 +49,5 @@ export const setAndReturnBaseDefaultState = <T = ContextStateType>(
     );
   }
 
-  return contextDefaultState[base];
+  return contextDefaultState[base] as T;
 };
