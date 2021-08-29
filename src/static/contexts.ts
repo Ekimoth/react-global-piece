@@ -1,4 +1,4 @@
-import { createContext, Dispatch, Context } from 'react';
+import { createContext, Dispatch, Context, SetStateAction } from 'react';
 
 // types
 import { ContextStateType } from '../types';
@@ -6,7 +6,7 @@ import { ContextStateType } from '../types';
 const createNewContext = () =>
   createContext([{}, () => {}] as [
     ContextStateType,
-    Dispatch<ContextStateType>
+    Dispatch<SetStateAction<ContextStateType>>
   ]);
 
 const contexts: Record<string, [Context<any>, ContextStateType]> = {
@@ -19,7 +19,12 @@ export const getContext = (region: string) => {
     contexts[region] = [newContext, {} as ContextStateType];
   }
 
-  return contexts[region];
+  return contexts[region] as [
+    React.Context<
+      [ContextStateType, Dispatch<SetStateAction<ContextStateType>>]
+    >,
+    ContextStateType
+  ];
 };
 
 export const getContextDefaultState = (region: string) => {

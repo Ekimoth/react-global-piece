@@ -27,7 +27,7 @@ const useStatePiece = <T>(base: string, defaultState: T, region = 'root') => {
         ({
           [baseMemo]: currentBaseState = defaultStateMemo,
           ...contextState
-        }: Record<string, any>) => ({
+        }) => ({
           ...contextState,
           [baseMemo]: reducer(currentBaseState),
         })
@@ -38,7 +38,7 @@ const useStatePiece = <T>(base: string, defaultState: T, region = 'root') => {
 
   const resetState: GlobalStateActionFunction<T, void> = useCallback(
     (reducer) => {
-      setState((contextState: Record<string, any>) => ({
+      setState((contextState) => ({
         ...contextState,
         [baseMemo]: reducer?.(defaultStateMemo) || defaultStateMemo,
       }));
