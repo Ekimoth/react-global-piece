@@ -45,7 +45,7 @@ export const makeBaseDefaultState = <T = ContextStateType>(
     contextDefaultState[base] = defaultBaseState;
   } else if (contextDefaultState[base] !== defaultBaseState && !suppressError) {
     console.error(
-      `Base "${base}" in region "${region}" already has a default value and it can't be overwritten.`
+      `Base "${base}" in region "${region}" already has a default value and it can't be overwritten. Test piece of text`
     );
   }
 
