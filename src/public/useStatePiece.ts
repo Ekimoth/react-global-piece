@@ -9,27 +9,38 @@ import { makeBaseDefaultState } from '../static/contexts';
 // hooks
 import usePiecefulContext from '../hooks/usePiecefulContext';
 
-const useStatePiece = <T>(base: string, defaultState: T, region = 'root') => {
+const useStatePiece = <T>(
+  base: string,
+  defaultState: T,
+  region = 'root',
+  initialState?: T
+) => {
   const regionRef = useRef(region);
   const baseRef = useRef(base);
 
+  const initialStateRef = useRef(initialState);
   const defaultStateFactoryRef = useRef(() =>
     makeBaseDefaultState<T>(regionRef.current, base, defaultState, true)
   );
 
   const {
-    currentContextState: [
-      { [baseRef.current]: state = defaultStateFactoryRef.current() },
-      setState,
-    ],
+    currentContextState: [{ [baseRef.current]: currentBaseState }, setState],
   } = usePiecefulContext(regionRef.current);
+
+  const state = useMemo(
+    () =>
+      currentBaseState && currentBaseState !== defaultStateFactoryRef.current
+        ? currentBaseState
+        : initialStateRef.current || defaultStateFactoryRef.current(),
+    [currentBaseState]
+  );
 
   const updateState: GlobalStateActionFunction<T> = useCallback(
     (reducer) => {
       setState(
         ({
-          [baseRef.current]:
-            currentBaseState = defaultStateFactoryRef.current(),
+          [baseRef.current]: currentBaseState = initialStateRef.current ??
+            defaultStateFactoryRef.current(),
           ...contextState
         }) => ({
           ...contextState,
@@ -45,7 +56,7 @@ const useStatePiece = <T>(base: string, defaultState: T, region = 'root') => {
       setState((contextState) => ({
         ...contextState,
         [baseRef.current]:
-          reducer?.(defaultStateFactoryRef.current()) ||
+          reducer?.(defaultStateFactoryRef.current()) ??
           defaultStateFactoryRef.current(),
       }));
     },

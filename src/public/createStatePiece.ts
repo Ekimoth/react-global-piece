@@ -11,7 +11,8 @@ const createStatePiece = <T>(
 ) => {
   const defaultState = makeBaseDefaultState<T>(region, base, defaultBaseState);
 
-  return () => useStatePiece<T>(base, defaultState, region);
+  return (initialState?: T) =>
+    useStatePiece<T>(base, defaultState, region, initialState);
 };
 
 export default createStatePiece;
