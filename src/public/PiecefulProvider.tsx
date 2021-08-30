@@ -1,4 +1,4 @@
-import React, { ReactNode, useState } from 'react';
+import React, { ReactNode, useState, useRef, useEffect } from 'react';
 
 // types
 import { ContextStateType } from '../types';
@@ -10,20 +10,32 @@ interface Props {
   children?: ReactNode;
   region?: string;
   initialState?: Record<string, any>;
+  liveUpdate?: boolean;
 }
 
 const PiecefulProvider = ({
   children,
   region = 'root',
   initialState: initialContextState,
+  liveUpdate = false,
 }: Props) => {
-  const { Provider, defaultContextState } = usePiecefulContext(region);
+  const regionRef = useRef(region);
 
-  const contextStateHook = useState<ContextStateType>(
+  const { Provider, defaultContextState } = usePiecefulContext(
+    regionRef.current
+  );
+
+  const [state, setState] = useState<ContextStateType>(
     initialContextState || defaultContextState
   );
 
-  return <Provider value={contextStateHook}>{children}</Provider>;
+  useEffect(() => {
+    if (initialContextState && liveUpdate) {
+      setState(initialContextState);
+    }
+  }, [initialContextState, liveUpdate]);
+
+  return <Provider value={[state, setState]}>{children}</Provider>;
 };
 
 export default PiecefulProvider;
