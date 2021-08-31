@@ -1,23 +1,17 @@
-import { useMemo, useContext } from 'react';
+import { useMemo } from 'react';
 
 // helpers
 import { getContext } from '../static/contexts';
 
 const usePiecefulContext = (region: string) => {
-  const [ContextInstance, defaultContextState] = useMemo(
+  const [ContextInstance, defaultStaticState] = useMemo(
     () => getContext(region),
     [region]
   );
 
-  const currentContextState = useContext(ContextInstance);
-
   return useMemo(
-    () => ({
-      Provider: ContextInstance.Provider,
-      defaultContextState,
-      currentContextState,
-    }),
-    [ContextInstance, defaultContextState, currentContextState]
+    () => [ContextInstance, defaultStaticState] as const,
+    [ContextInstance, defaultStaticState]
   );
 };
 

@@ -33,17 +33,20 @@ export const getContextDefaultState = (region: string) => {
   return defaultState;
 };
 
-export const makeBaseDefaultState = <T = ContextStateType>(
+export const setDefaultStaticPiece = <T = ContextStateType>(
   region: string,
   base: string,
-  defaultBaseState: T,
+  defaultStaticPiece: T,
   suppressError = false
 ) => {
-  const [, contextDefaultState] = getContext(region);
+  const contextDefaultState = getContextDefaultState(region);
 
-  if (!contextDefaultState[base]) {
-    contextDefaultState[base] = defaultBaseState;
-  } else if (contextDefaultState[base] !== defaultBaseState && !suppressError) {
+  if (!(base in contextDefaultState)) {
+    contextDefaultState[base] = defaultStaticPiece;
+  } else if (
+    contextDefaultState[base] !== defaultStaticPiece &&
+    !suppressError
+  ) {
     console.error(
       `Base "${base}" in region "${region}" already has a default value and it can't be overwritten.`
     );

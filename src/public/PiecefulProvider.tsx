@@ -9,19 +9,18 @@ import usePiecefulContext from '../hooks/usePiecefulContext';
 interface Props {
   children?: ReactNode;
   region?: string;
-  liveUpdate?: boolean;
 }
 
 const PiecefulProvider = ({ children, region = 'root' }: Props) => {
   const regionRef = useRef(region);
 
-  const { Provider, defaultContextState } = usePiecefulContext(
-    regionRef.current
+  const [Context, defaultStaticState] = usePiecefulContext(regionRef.current);
+
+  const liveState = useState<ContextStateType>(defaultStaticState);
+
+  return (
+    <Context.Provider value={liveState}>{children}</Context.Provider>
   );
-
-  const contextStateHook = useState<ContextStateType>(defaultContextState);
-
-  return <Provider value={contextStateHook}>{children}</Provider>;
 };
 
 export default PiecefulProvider;
