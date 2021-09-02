@@ -35,6 +35,6 @@ export default class ContextHolder {
       this.defaultState[base] = defaultBaseState;
     }
 
-    return this.defaultState[base];
+    return this.defaultState[base] as T;
   };
 }

@@ -21,9 +21,7 @@ const PiecefulProvider = ({ children, region = 'root' }: Props) => {
 
   const Context = contextHolder.context;
 
-  const [state, setState] = useState<ContextStateType>(
-    contextHolder.defaultState
-  );
+  const [state, setState] = useState<ContextStateType>({});
 
   return (
     <Context.Provider value={[state, setState, contextHolder]}>

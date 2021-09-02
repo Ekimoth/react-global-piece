@@ -37,10 +37,7 @@ const useStatePiece = <T>(base: string, initialState: T, region = 'root') => {
   );
 
   const state = useMemo(
-    () =>
-      currentStatePiece && currentStatePiece !== defaultStateMemo
-        ? currentStatePiece
-        : initialStateMemo ?? defaultStateMemo,
+    () => (currentStatePiece as T) ?? initialStateMemo ?? defaultStateMemo,
     [currentStatePiece, initialStateMemo, defaultStateMemo]
   );
 
@@ -70,7 +67,7 @@ const useStatePiece = <T>(base: string, initialState: T, region = 'root') => {
   );
 
   return useMemo(
-    () => [state as T, updateState, resetState] as const,
+    () => [state, updateState, resetState] as const,
     [state, updateState, resetState]
   );
 };
