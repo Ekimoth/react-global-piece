@@ -1,8 +1,5 @@
-// hooks
-import useStatePiece from './useStatePiece';
-
-// factory
 import ContextFactory from './ContextFactory';
+import useStatePiece from './useStatePiece';
 
 const createStatePiece = <T>(
   base: string,

@@ -1,10 +1,6 @@
 import { useCallback, useMemo, useRef, useContext } from 'react';
-
-// types
-import { GlobalStateActionFunction } from './types';
-
-// factory
 import ContextFactory from './ContextFactory';
+import { GlobalStateActionFunction } from './types';
 
 const useStatePiece = <T>(base: string, initialState: T, region = 'root') => {
   const regionRef = useRef(region);
@@ -37,8 +33,8 @@ const useStatePiece = <T>(base: string, initialState: T, region = 'root') => {
   );
 
   const state = useMemo(
-    () => (currentStatePiece as T) ?? initialStateMemo ?? defaultStateMemo,
-    [currentStatePiece, initialStateMemo, defaultStateMemo]
+    () => (currentStatePiece as T) ?? initialStateMemo,
+    [currentStatePiece, initialStateMemo]
   );
 
   const updateState: GlobalStateActionFunction<T> = useCallback(

@@ -1,10 +1,10 @@
-import React, { ComponentType } from 'react';
+import React, { FC, ComponentType } from 'react';
 
 const withPieceful =
   <OwnProps, HooksProps>(
     Component: ComponentType<OwnProps & HooksProps>,
     useHooks: (ownProps: OwnProps) => HooksProps
-  ): ComponentType<OwnProps> =>
+  ): FC<OwnProps> =>
   (ownProps) => {
     const hooksOutputs = useHooks(ownProps);
     return <Component {...ownProps} {...hooksOutputs} />;

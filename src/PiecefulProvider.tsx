@@ -1,10 +1,6 @@
 import React, { ReactNode, useState, useRef, useMemo } from 'react';
-
-// types
-import { ContextStateType } from './types';
-
-// factory
 import ContextFactory from './ContextFactory';
+import { ContextStateType } from './types';
 
 interface Props {
   children?: ReactNode;
@@ -19,14 +15,12 @@ const PiecefulProvider = ({ children, region = 'root' }: Props) => {
     []
   );
 
-  const Context = contextHolder.context;
-
   const [state, setState] = useState<ContextStateType>({});
 
   return (
-    <Context.Provider value={[state, setState, contextHolder]}>
+    <contextHolder.context.Provider value={[state, setState, contextHolder]}>
       {children}
-    </Context.Provider>
+    </contextHolder.context.Provider>
   );
 };
 

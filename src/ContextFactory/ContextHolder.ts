@@ -1,10 +1,6 @@
 import { Context, createContext, Dispatch, SetStateAction } from 'react';
-
-// types
-import { ContextStateType } from '../types';
-
-// class imports
 import ContextHolderClone from './ContextHolderClone';
+import { ContextStateType } from '../types';
 
 type ContextRegionDataType = [
   ContextStateType,

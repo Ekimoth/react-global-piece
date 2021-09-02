@@ -1,7 +1,4 @@
-// class imports
 import ContextHolder from './ContextHolder';
-
-// types
 import { ContextStateType } from '../types';
 
 export default class ContextHolderClone extends ContextHolder {

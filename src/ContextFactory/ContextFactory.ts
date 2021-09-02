@@ -2,7 +2,7 @@ import ContextHolder from './ContextHolder';
 import ContextHolderClone from './ContextHolderClone';
 
 export default class ContextFactory {
-  static contexts: Record<string, ContextHolder> = {
+  private static contexts: Record<string, ContextHolder> = {
     root: new ContextHolder(),
   };
 
