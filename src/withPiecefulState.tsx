@@ -1,6 +1,6 @@
 import React, { FC, ComponentType } from 'react';
 
-const withPieceful =
+const withPiecefulState =
   <OwnProps, HooksProps>(
     Component: ComponentType<OwnProps & HooksProps>,
     useHooks: (ownProps: OwnProps) => HooksProps
@@ -10,4 +10,4 @@ const withPieceful =
     return <Component {...ownProps} {...hooksOutputs} />;
   };
 
-export default withPieceful;
+export default withPiecefulState;
