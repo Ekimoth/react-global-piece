@@ -9,7 +9,7 @@ Some of the benefits it offers:
 
 - [x] Zero boilerplate or in-advance global state setup necessary - it's entirely optional and "decentralized" to your components and hooks
 - [x] State data you no longer use will automatically never be even created in your app
-- [x] So-called "[regional state](#regional-state)" support (or multiple "global" states of the same kind)
+- [x] So-called "[regional state](#regional-state)" support
 - [x] It encourages having your state split into smaller pieces
 - [x] Makes it easy to search through your code and detect what piece of state is no longer used and can safely be deleted with no "leftovers"
 
