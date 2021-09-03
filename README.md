@@ -4,15 +4,26 @@ A ridiculously tiny library for global and regional state management in React
 
 ---
 
-`React Pieceful State` is a ridiculously tiny, but straight-forward mechanism for state management in React. It utilizes what's already there in React - contexts and hooks, and is inspired entirely by the interface and the convenience offered by the `useState` and the `useReducer` hooks.
+`React Pieceful State` is a ridiculously tiny, but straight-forward mechanism for state management in React. Inspired by the interface and the convenience offered by React's `useState` hook, it utilizes nothing more than exactly that - hooks and contexts.
 
-Some of the benefits you're getting:
+Some of the benefits offered:
 
 - Zero boilerplate or in-advance state setup
-- Encourages having your state split into smaller pieces closely wired with their own setters or reducers, encapsulated in their own custom hooks
-- Makes it easy to search through your code and detect what piece of state is no longer needed and can safely be deleted
+- Convenient substitutes of selectors by supporting so-called `regional state` out of the box
+- It encourages having your state split into smaller pieces closely wired with their reducers/setters within their own hooks
+- Makes it easy to search through your code and detect what piece of state is no longer used and can safely be deleted
 
-## Installation
+# Overview
+- [Installation](#installation)
+- Usage
+  - `PiecefulProvider`
+  - `useStatePiece`
+  - `createStatePiece`
+  - `withPiecefulState`
+- Regional state? What is that?
+- Examples
+
+# Installation
 
 ```sh
 npm install react-pieceful-state
