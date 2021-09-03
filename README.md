@@ -292,7 +292,7 @@ But wait, why should we have to do all that if we're already using a global stat
 
 Both the `region` prop and the `region` argument's default value is `root`.
 
-Let's go back to our `colors.map()` statement in our `ColorfulComponent` and wrap each of its outputs with `PiecefulProvider`, only in this particular instance we give its `region` value a custom value of "myColor". That's everything `React Pieceful State` needs to spare us the trouble and create a new "regional" `Context` for us we're wrapping our `ColorfulComponent`s with.
+Let's go back to the `colors.map()` statement in `ColorfulComponent` and wrap each of its outputs with `PiecefulProvider`, only in this particular instance we give its `region` value a custom value of "myColor". That's everything `React Pieceful State` needs to spare us the trouble and create a new "regional" `Context` for us.
 
 ```jsx
 return (
@@ -306,12 +306,12 @@ return (
 );
 ```
 
-Then go back inside our `Color` component and make the following modifications:
+Then go back inside `ColorfulComponent` and make the following modifications:
 
 ```javascript
 export const useMyColor = createStatePiece('colorValue', '', 'myColor');
 
-const Color = ({ color }) => {
+const ColorfulComponent = ({ color }) => {
   const [myColor] = useMyColor(color);
   ...
 ```
