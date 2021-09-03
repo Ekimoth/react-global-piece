@@ -20,7 +20,7 @@ Some of the benefits it offers:
   - [createStatePiece](#createstatepiece)
   - [useStatePiece](#usestatepiece)
   - [withPiecefulState](#withpiecefulstate)
-- [What is "Regional state"?](#regional-state)"?
+- [What is "Regional state"?](#regional-state)
   - [Example](#example)
   - [React's own Context component](#reacts-own-context-component)
   - [The "region" prop/argument](#the-region-prop-of-piecefulprovider-and-the-region-argument-of-createstatepiece-and-usestatepiece)
