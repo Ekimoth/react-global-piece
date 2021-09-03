@@ -20,7 +20,10 @@ Some of the benefits it offers:
   - [createStatePiece](#createstatepiece)
   - [useStatePiece](#usestatepiece)
   - [withPiecefulState](#withpiecefulstate)
-- What is "[Regional state](#regional-state)"?
+- [What is "Regional state"?](#regional-state)"?
+  - [Example](#example)
+  - [React's own Context component](#reacts-own-context-component)
+  - [The "region" prop/argument](#the-region-prop-of-piecefulprovider-and-the-region-argument-of-createstatepiece-and-usestatepiece)
 
 ## Installation
 
@@ -234,10 +237,11 @@ export default withPiecefulState(MyClassComponent, (ownProps) => {
 });
 ```
 
-## Regional state
+## What is "Regional state"?
 
 So-called "regional state" is state that is neither local, nor global. It only exists in a certain part of your React tree and, unlike typical global state, there can be multiple instances of it, all of which can have their own different values. So it's basically state that is global only to the tree it's on top of.
 
+### Example
 Consider having something like the following tree
 ```jsx
 const App = () => (
@@ -279,15 +283,16 @@ const ColorfulComponent = ({ color }) => {
 
 And then imagine that each of the `NestedComponent1` through `NestedComponent10` have their own deeply nested elements and components that might need to use that single value of `color`. You'd either have to resort to "prop drilling" or to keep as many of those elements and components within the scope of a single component where `color` exists and then you'd still have to assign each of them with the `color` value separately, as we're already doing in the example above. Or we would eventually remember about the React `Context` component.
 
-#### React's own `Context` component
+### React's own `Context` component
 Of course, we've got React `Context` at our disposal. We would typically create a new `Context` with `createContext(...)`, export it so other components could retrieve its value with `useContext(Context)`, then render it inside a new wrapper component where we would assign it an initial value and craft its mutation logic from scratch.
 
 But wait, why should we have to do all that if we're already using a global state management tool? We shouldn't. And this is where `React Pieceful State` comes with a solution out of the box.
 
-#### The `region` prop of `PiecefulProvider` and the `region` argument of `createStatePiece` and `useStatePiece`
+### The `region` prop of `PiecefulProvider` and the `region` argument of `createStatePiece` and `useStatePiece`
 
 Both the `region` prop and the `region` argument's default value is `root`.
-Let's go back to our `colors.map()` statement and wrap each of its outputs with `PiecefulProvider`, only this time we set its `region` value to `myColor`:
+
+Let's go back to our `colors.map()` statement in our `ColorfulComponent` and wrap each of its outputs with `PiecefulProvider`, only in this particular instance we give its `region` value a custom value of "myColor". That's everything `React Pieceful State` needs to spare us the trouble and create a new "regional" `Context` for us we're wrapping our `ColorfulComponent`s with.
 
 ```jsx
 return (
