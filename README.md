@@ -286,7 +286,7 @@ And then imagine that each of the `NestedComponent1` through `NestedComponent10`
 ### React's own `Context` component
 Of course, we've got React `Context` at our disposal. We would typically create a new `Context` with `createContext(...)`, export it so other components could retrieve its value with `useContext(Context)`, then render it inside a new wrapper component where we would assign it an initial value and craft its mutation logic from scratch.
 
-But wait, why should we have to do all that if we're already using a global state management tool? We shouldn't. And this is where `React Pieceful State` comes with a solution out of the box.
+But wait, why should we have to do all that if we're already using a global state management tool? We shouldn't. And this is where `React Pieceful State` comes with a unique and convenient solution out of the box.
 
 ### The `region` prop of `PiecefulProvider` and the `region` argument of `createStatePiece` and `useStatePiece`
 
