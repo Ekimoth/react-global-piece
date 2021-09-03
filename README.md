@@ -21,7 +21,7 @@ Some of the benefits it offers:
   - [useStatePiece](#usestatepiece)
   - [createStatePiece](#createstatepiece)
   - [withPiecefulState](#withpiecefulstate)
-- [What is "Regional state"?](#regional-state)
+- What is "[Regional state](#regional-state)"?
 - [Examples](#examples)
 
 ## Installation
