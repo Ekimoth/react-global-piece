@@ -6,9 +6,11 @@ const createStatePiece = <T>(
   defaultBaseState: T,
   region = 'root'
 ) => {
-  const defaultState = ContextFactory.getContextHolder(
-    region
-  ).setDefaultBaseState(base, defaultBaseState);
+  const defaultState = ContextFactory.setDefaultStatePiece(
+    region,
+    base,
+    defaultBaseState
+  );
 
   return (initialState?: T) =>
     useStatePiece<T>(base, initialState ?? defaultState, region);

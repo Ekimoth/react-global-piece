@@ -11,7 +11,7 @@ const PiecefulProvider = ({ children, region = 'root' }: Props) => {
   const regionRef = useRef(region);
 
   const contextHolder = useMemo(
-    () => ContextFactory.cloneContextHolder(regionRef.current),
+    () => ContextFactory.getContextHolderClone(regionRef.current),
     []
   );
 

@@ -7,16 +7,17 @@ const useStatePiece = <T>(base: string, initialState: T, region = 'root') => {
   const baseRef = useRef(base);
   const initialStateRef = useRef(initialState);
 
-  const Context = ContextFactory.getContext(regionRef.current);
+  const Context = useMemo(
+    () => ContextFactory.getContext(regionRef.current),
+    []
+  );
 
   const [{ [baseRef.current]: currentStatePiece }, setState, contextHolder] =
     useContext(Context);
 
-  const contextHolderRef = useRef(contextHolder);
-
   const defaultStateMemo = useMemo(
     () =>
-      contextHolderRef.current?.setDefaultBaseState(
+      contextHolder?.setDefaultBaseState(
         baseRef.current,
         initialStateRef.current
       ) ?? initialStateRef.current,
@@ -25,7 +26,7 @@ const useStatePiece = <T>(base: string, initialState: T, region = 'root') => {
 
   const initialStateMemo = useMemo(
     () =>
-      contextHolderRef.current?.setInitialBaseState(
+      contextHolder?.setInitialBaseState(
         baseRef.current,
         initialStateRef.current
       ) ?? initialStateRef.current,
