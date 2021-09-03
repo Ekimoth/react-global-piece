@@ -17,7 +17,8 @@ Some of the benefits it offers:
 - [Installation](#installation)
 - [Usage](#usage)
   - [PiecefulProvider](#piecefulprovider)
-  - [createStatePiece and useStatePiece](#createstatepiece-and-usestatepiece)
+  - [createStatePiece](#createstatepiece)
+  - [useStatePiece](#usestatepiece)
   - [withPiecefulState](#withpiecefulstate)
 - What is "[Regional state](#regional-state)"?
 - [Examples](#examples)
