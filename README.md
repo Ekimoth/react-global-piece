@@ -38,7 +38,7 @@ yarn add react-pieceful-state
 
 ## Usage
 
-The main two gears of `React Pieceful State` are the `PiecefulProvider` wrapper component and the `useStatePiece` hook.
+The main two gears of React Pieceful State are the [PiecefulProvider](#piecefulprovider) wrapper component and the [useStatePiece](#usestatepiece) hook.
 
 ```javascript
 import {
@@ -86,7 +86,9 @@ const MainApp = () => {
 };
 ```
 
-Another two parts are the entirely optional `createStatePiece` hook factory function and the `withPiecefulState` wrapper for your `class components`, if you have any.
+-----------------------------------------------
+
+The other two parts of React Pieceful State are the entirely optional [createStatePiece](#createstatepiece) hook factory function and the [withPiecefulState](#withpiecefulstate) wrapper for your `class components`, if you have any.
 
 ```javascript
 import {
