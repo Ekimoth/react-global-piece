@@ -20,7 +20,7 @@ Some of the benefits it offers:
   - [createStatePiece](#createstatepiece)
   - [useStatePiece](#usestatepiece)
   - [withPiecefulState](#withpiecefulstate)
-- [What is "Regional state"?](#regional-state)
+- [What is "Regional state"?](#what-is-regional-state)
   - [Example](#example)
   - [React's own Context component](#reacts-own-context-component)
   - [The "region" prop/argument](#the-region-prop-of-piecefulprovider-and-the-region-argument-of-createstatepiece-and-usestatepiece)
@@ -290,7 +290,7 @@ But wait, why should we have to do all that if we're already using a global stat
 
 ### The `region` prop of `PiecefulProvider` and the `region` argument of `createStatePiece` and `useStatePiece`
 
-Both the `region` prop and the `region` argument's default value is `root`.
+Both the `region` prop and the `region` argument's default value is `root`. Whenever we use a custom value for any of them, what `React Pieceful State` is essentially doing under the hood is what was described in the [previous section](#the-region-prop-of-piecefulprovider-and-the-region-argument-of-createstatepiece-and-usestatepiece).
 
 Let's go back to the `colors.map()` statement in `ColorfulComponent` and wrap each of its outputs with `PiecefulProvider`, only in this particular instance we give its `region` value a custom value of "myColor". That's everything `React Pieceful State` needs to spare us the trouble and create a new "regional" `Context` for us.
 
