@@ -71,7 +71,7 @@ const App = () => {
 
 ### `createStatePiece`
 
-`createStatePiece` is a function used for declaring a "piece of state" before your app gets rendered. It returns a hook that can later be used for accessing and modifying that state from your app. There are two arguments it requires:
+Then you need to declare a "piece of state" in the same file with any component that's going to need it. It returns a hook that can be used for accessing and modifying that state by that component, or any other component for that matter. There are two arguments it requires:
 - `base` _string_ - this will be the unique identifier of the "piece of state" we're creating
 - `defaultValue` _any_ - its _default value_ (not to confuse it with _initial value_)
 
@@ -88,7 +88,7 @@ const SomeComponent = () => {
 };
 ```
 
-Since the state it represents is going to be global for the entire tree wrapped by the `PiecefulProvider` component, the returned hook can be called from anywhere inside that tree. It returns an array of three elements as shown below:
+Since the state it represents is going to be global for the entire tree wrapped by `PiecefulProvider`, the returned hook can be called from anywhere inside that tree. It returns an array of three elements as shown below:
 
 ```javascript
 import useUserData from 'your-path-to-the/useUserData';
@@ -108,7 +108,7 @@ setStateValue((state) => ({
 }));
 ```
 
-`resetStateValue` is a function that resets the state to its _default value_. It accepts an optional _reducer function_ as an argument which lets combine the _default value_ with some non-default value of your own choosing.
+`resetStateValue` is a function that resets the state to its _default value_. It accepts an optional _reducer function_ as an argument which lets you combine the _default value_ with some non-default value of your own choosing.
 
 ```javascript
 // sets the state to its default value
@@ -124,7 +124,7 @@ resetStateValue((defaultState) => ({
 }));
 ```
 
-Let's imagine that by the time your component gets rendered you've already got some initial data you want to populate your state with, which can very possibly be different than its _default value_. This is why the hook we generated with `createStatePiece` accepts an optional argument `initialState` for overriding the _default state_.
+Let's imagine that by the time your component gets rendered you've already got some initial data you want to populate your state with, which can very possibly be different than its _default value_. You can overwrite the _default value_ simply by passing your preferred initial value as an argument to the hook we generated with `createStatePiece`:
 
 ```javascript
 const [stateValue, setStateValue, resetStateValue] = useUserData({
@@ -135,7 +135,7 @@ const [stateValue, setStateValue, resetStateValue] = useUserData({
 
 ### `useStatePiece`
 
-In fact, you don't even have to generate your state hooks with `createStatePiece`. You can do the exact same thing with `useStatePiece` in runtime.
+In fact, you don't even have to generate your state hooks with `createStatePiece`. You can do the exact same thing with `useStatePiece` in runtime from your component's body.
 It accepts the same two mandatory arguments as the former: `base` and `default value`, which in this case will serve as `initial value` as well.
 
 <sub>Again, there is the third, optional _string_ argument called `region`, which is explained in the [Regional state](#regional-state) section</sub>
@@ -236,4 +236,97 @@ export default withPiecefulState(MyClassComponent, (ownProps) => {
 
 ## Regional state
 
-{{no text yet}}
+So-called "regional state" is state that is neither local, nor global. It only exists in a certain part of your React tree and, unlike typical global state, there can be multiple instances of it, all of which can have their own different values. So it's basically state that is global only to the tree it's on top of.
+
+Consider having something like the following tree
+```jsx
+const App = () => (
+  <PiecefulProvider>
+    <Colors />
+  </PiecefulProvider>
+);
+
+const Colors = () => {
+  const [colors] = useStatePiece('colors', ['red', 'blue', 'white', 'yellow', 'green']);
+  
+  return (
+    <>
+      {colors.map((color) => <ColorfulComponent color={color} />}
+    </>
+  );
+};
+
+const ColorfulComponent = ({ color }) => {
+  return (
+    <TopComponent>
+      <NestedComponent1 mainColor={color}>
+        <NestedComponent2 backgroundColor={color}>
+          ...............
+            ...............
+              ...............
+                <NestedComponent9 fallbackColor={color}>
+                  <NestedComponent10 textColor={color} />
+                </NestedComponent9>
+              ...............
+            ...............
+          ...............
+        </NestedComponent2>
+      </NestedComponent1>
+    </TopComponent>
+  );
+};
+```
+
+And then imagine that each of the `NestedComponent1` through `NestedComponent10` have their own deeply nested elements and components that might need to use that single value of `color`. You'd either have to resort to "prop drilling" or to keep as many of those elements and components within the scope of a single component where `color` exists and then you'd still have to assign each of them with the `color` value separately, as we're already doing in the example above. Or we would eventually remember about the React `Context` component.
+
+#### React's own `Context` component
+Of course, we've got React `Context` at our disposal. We would typically create a new `Context` with `createContext(...)`, export it so other components could retrieve its value with `useContext(Context)`, then render it inside a new wrapper component where we would assign it an initial value and craft its mutation logic from scratch.
+
+But wait, why should we have to do all that if we're already using a global state management tool? We shouldn't. And this is where `React Pieceful State` comes with a solution out of the box.
+
+#### The `region` prop of `PiecefulProvider` and the `region` argument of `createStatePiece` and `useStatePiece`
+
+Both the `region` prop and the `region` argument's default value is `root`.
+Let's go back to our `colors.map()` statement and wrap each of its outputs with `PiecefulProvider`, only this time we set its `region` value to `myColor`:
+
+```jsx
+return (
+  <>
+    {colors.map((color) => (
+      <PiecefulProvider region="myColor">
+        <Color color={color} />
+      </PiecefulProvider>
+    )}
+  </>
+);
+```
+
+Then go back inside our `Color` component and make the following modifications:
+
+```javascript
+export const useMyColor = createStatePiece('colorValue', '', 'myColor');
+
+const Color = ({ color }) => {
+  const [myColor] = useMyColor(color);
+  ...
+```
+
+That's it, now each and every `NestedComponent1` through `NestedComponent10` that ever needs the `color` value can be spared from prop drilling and prop assignments with that value. All they need to do is refer to the `useMyColor` hook we just generated. Our tree now looks something like this:
+
+```jsx
+<TopComponent>
+  <NestedComponent1>
+    <NestedComponent2>
+      ...............
+        ...............
+          ...............
+            <NestedComponent9>
+              <NestedComponent10 />
+            </NestedComponent9>
+          ...............
+        ...............
+      ...............
+    </NestedComponent2>
+  </NestedComponent1>
+</TopComponent>
+```
