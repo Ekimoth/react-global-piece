@@ -21,7 +21,6 @@ Some of the benefits it offers:
   - [useStatePiece](#usestatepiece)
   - [withPiecefulState](#withpiecefulstate)
 - What is "[Regional state](#regional-state)"?
-- [Examples](#examples)
 
 ## Installation
 
@@ -72,7 +71,7 @@ const App = () => {
 
 ### `createStatePiece`
 
-`createStatePiece` is used for declaring a "piece of state" before your app gets rendered. It returns a hook that can later be used for accessing and modifying that state from your app. There are two arguments it requires:
+`createStatePiece` is a function used for declaring a "piece of state" before your app gets rendered. It returns a hook that can later be used for accessing and modifying that state from your app. There are two arguments it requires:
 - `base` _string_ - this will be the unique identifier of the "piece of state" we're creating
 - `defaultValue` _any_ - its _default value_ (not to confuse it with _initial value_)
 
@@ -89,7 +88,7 @@ const SomeComponent = () => {
 };
 ```
 
-Since the state it represents is going to be global for the entire tree wrapped by the `PiecefulProvider` component, the returned hook can be called from anywhere inside that tree. It returns an array of three elements:
+Since the state it represents is going to be global for the entire tree wrapped by the `PiecefulProvider` component, the returned hook can be called from anywhere inside that tree. It returns an array of three elements as shown below:
 
 ```javascript
 import useUserData from 'your-path-to-the/useUserData';
@@ -109,7 +108,7 @@ setStateValue((state) => ({
 }));
 ```
 
-`resetStateValue` is a function that resets the state to its _default value_. It accepts an optional _reducer function_ as an argument with which you can combine the _default value_ with some non-default value of your own choosing.
+`resetStateValue` is a function that resets the state to its _default value_. It accepts an optional _reducer function_ as an argument which lets combine the _default value_ with some non-default value of your own choosing.
 
 ```javascript
 // sets the state to its default value
@@ -125,7 +124,7 @@ resetStateValue((defaultState) => ({
 }));
 ```
 
-Let's imagine that by the time your component gets rendered you've already got some initial data you want to populate your state with, which can very possibly be different than its _default value_. This is why the hook we generated with `createStatePiece` accepts an optional argument `initialState`.
+Let's imagine that by the time your component gets rendered you've already got some initial data you want to populate your state with, which can very possibly be different than its _default value_. This is why the hook we generated with `createStatePiece` accepts an optional argument `initialState` for overriding the _default state_.
 
 ```javascript
 const [stateValue, setStateValue, resetStateValue] = useUserData({
@@ -137,7 +136,7 @@ const [stateValue, setStateValue, resetStateValue] = useUserData({
 ### `useStatePiece`
 
 In fact, you don't even have to generate your state hooks with `createStatePiece`. You can do the exact same thing with `useStatePiece` in runtime.
-It accepts the same two mandatory arguments as the former: `base`, and `default value`, which in this case will serve as `initial value` as well.
+It accepts the same two mandatory arguments as the former: `base` and `default value`, which in this case will serve as `initial value` as well.
 
 <sub>Again, there is the third, optional _string_ argument called `region`, which is explained in the [Regional state](#regional-state) section</sub>
 
@@ -148,7 +147,7 @@ const [{ name, email }, setStateValue, resetStateValue] = useStatePiece('user-da
 });
 ```
 
-The drawback about using this hook directly is that you would have to provide it with the _default/initial_ value argument every time, even when it might have already been assigned with it. This is why it's advised to __never__ make multiple `useStatePiece` calls with the same value for the `base` argument and wrap those calls inside a single unique custom hook, like so:
+To avoid retyping this hook call along with all of its required arguments across your app, it's recommended that you wrap it in your own custom hook and then reuse that hook, like so: 
 
 ```javascript
 import { useStatePiece } from 'react-pieceful-state';
@@ -169,14 +168,28 @@ const useUserData = (initialName, initialEmail) => {
   
   return [{ name, email }, { setName, setEmail }];
 };
+
+export default useUserData;
 ```
 
 ### `withPiecefulState`
 
-Every ? The `withGlobalState` higher-order-component `(HOC)` is here. It utilizes the same kind of hooks we've already looked into, or any kind of hooks actually:
+`withPiecefulState` is a component wrapper function that makes it possible for `class components` to use hooks. It accepts two arguments:
+- The class component to be wrapped
+- A function whose only argument are the wrapped component's own props, which may or may not return an unlimited number of hook outputs, which would otherwise be impossible to do from the body of a `class component`.
 
 ```javascript
 class MyClassComponent extends PureComponent {
+  constructor(props) {
+    super(props);
+    
+    // how you would destructure hooks' output
+    const {
+      userDataHook: [{ name, email }, { setName, setEmail }],
+      someOtherHook: [someStateValue, setSomeStateValue],
+    } = props;
+  }
+
   onNameChange = ({ target: { value } }) => {
     const {
       userDataHook: [, { setName }],
@@ -210,9 +223,17 @@ class MyClassComponent extends PureComponent {
   }
 }
 
-export default withPiecefulState(MyClassComponent, (ownProps) => ({
-  userDataHook: useUserData(ownProps),
-}));
+export default withPiecefulState(MyClassComponent, (ownProps) => {
+  // any code can be run here, just as with any hook or function in general
+  // including void hook calls, such as useEffect()
+
+  return {
+    userDataHook: useUserData(ownProps.initialName, ownProps.initialEmail),
+    someOtherHook: useState(false),
+  };
+});
 ```
 
 ## Regional state
+
+{{no text yet}}
