@@ -47,15 +47,6 @@ import {
 } from 'react-pieceful-state';
 ```
 
-Another two parts are the entirely optional `createStatePiece` hook factory function and the `withPiecefulState` wrapper for your `class components`, if you have any.
-
-```javascript
-import {
-  createStatePiece,
-  withPiecefulState,
-} from 'react-pieceful-state';
-```
-
 ### `PiecefulProvider`
 
 First you need to wrap your app with the `PiecefulProvider` component. No props are required at this point.
@@ -93,6 +84,15 @@ const MainApp = () => {
     </>
   );
 };
+```
+
+Another two parts are the entirely optional `createStatePiece` hook factory function and the `withPiecefulState` wrapper for your `class components`, if you have any.
+
+```javascript
+import {
+  createStatePiece,
+  withPiecefulState,
+} from 'react-pieceful-state';
 ```
 
 ### `createStatePiece`
