@@ -11,7 +11,7 @@ type ContextRegionDataType = [
 export default class ContextHolder {
   context: Context<ContextRegionDataType>;
 
-  defaultState: ContextStateType = {};
+  private defaultState: ContextStateType = {};
 
   constructor(contextHolder?: ContextHolder) {
     if (contextHolder) {
@@ -26,9 +26,9 @@ export default class ContextHolder {
     }
   }
 
-  setDefaultBaseState = <T>(base: string, defaultBaseState: T) => {
+  setDefaultValue = <T>(base: string, defaultValue: T) => {
     if (!(base in this.defaultState)) {
-      this.defaultState[base] = defaultBaseState;
+      this.defaultState[base] = defaultValue;
     }
 
     return this.defaultState[base] as T;

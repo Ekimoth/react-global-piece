@@ -22,6 +22,9 @@ export default class ContextFactory {
   static getContext = (region: string) =>
     ContextFactory.getContextHolder(region).context;
 
-  static setDefaultStatePiece = <T>(region: string, base: string, value: T) =>
-    ContextFactory.getContextHolder(region).setDefaultBaseState(base, value);
+  static setRegionalBaseDefaultValue = <T>(
+    region: string,
+    base: string,
+    value: T
+  ) => ContextFactory.getContextHolder(region).setDefaultValue(base, value);
 }

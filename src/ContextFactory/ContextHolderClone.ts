@@ -2,11 +2,11 @@ import ContextHolder from './ContextHolder';
 import { ContextStateType } from '../types';
 
 export default class ContextHolderClone extends ContextHolder {
-  initialState: ContextStateType = {};
+  private initialState: ContextStateType = {};
 
-  setInitialBaseState = <T>(base: string, initialState: T) => {
+  setInitialValue = <T>(base: string, initialValue: T) => {
     if (!(base in this.initialState)) {
-      this.initialState[base] = initialState;
+      this.initialState[base] = initialValue;
     }
 
     return this.initialState[base] as T;

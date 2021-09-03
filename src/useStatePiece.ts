@@ -2,47 +2,47 @@ import { useCallback, useMemo, useRef, useContext } from 'react';
 import ContextFactory from './ContextFactory';
 import { GlobalStateActionFunction } from './types';
 
-const useStatePiece = <T>(base: string, initialState: T, region = 'root') => {
+const useStatePiece = <T>(base: string, initialValue: T, region = 'root') => {
   const regionRef = useRef(region);
   const baseRef = useRef(base);
-  const initialStateRef = useRef(initialState);
+  const initialValueRef = useRef(initialValue);
 
   const Context = useMemo(
     () => ContextFactory.getContext(regionRef.current),
     []
   );
 
-  const [{ [baseRef.current]: currentStatePiece }, setState, contextHolder] =
+  const [{ [baseRef.current]: currentValue }, setState, contextHolder] =
     useContext(Context);
 
-  const defaultStateMemo = useMemo(
+  const defaultValueMemo = useMemo(
     () =>
-      contextHolder?.setDefaultBaseState(
+      contextHolder?.setDefaultValue(
         baseRef.current,
-        initialStateRef.current
-      ) ?? initialStateRef.current,
+        initialValueRef.current
+      ) ?? initialValueRef.current,
     []
   );
 
-  const initialStateMemo = useMemo(
+  const initialValueMemo = useMemo(
     () =>
-      contextHolder?.setInitialBaseState(
+      contextHolder?.setInitialValue(
         baseRef.current,
-        initialStateRef.current
-      ) ?? initialStateRef.current,
+        initialValueRef.current
+      ) ?? initialValueRef.current,
     []
   );
 
-  const state = useMemo(
-    () => (currentStatePiece as T) ?? initialStateMemo,
-    [currentStatePiece, initialStateMemo]
+  const value = useMemo(
+    () => (currentValue as T) ?? initialValueMemo,
+    [currentValue, initialValueMemo]
   );
 
-  const updateState: GlobalStateActionFunction<T> = useCallback(
+  const setValue: GlobalStateActionFunction<T> = useCallback(
     (reducer) => {
       setState(
         ({
-          [baseRef.current]: currentPiece = initialStateMemo,
+          [baseRef.current]: currentPiece = initialValueMemo,
           ...contextState
         }) => ({
           ...contextState,
@@ -50,22 +50,22 @@ const useStatePiece = <T>(base: string, initialState: T, region = 'root') => {
         })
       );
     },
-    [setState, initialStateMemo]
+    [setState, initialValueMemo]
   );
 
-  const resetState: GlobalStateActionFunction<T, void> = useCallback(
+  const resetValue: GlobalStateActionFunction<T, void> = useCallback(
     (reducer) => {
       setState((contextState) => ({
         ...contextState,
-        [baseRef.current]: reducer?.(defaultStateMemo) ?? defaultStateMemo,
+        [baseRef.current]: reducer?.(defaultValueMemo) ?? defaultValueMemo,
       }));
     },
-    [setState, defaultStateMemo]
+    [setState, defaultValueMemo]
   );
 
   return useMemo(
-    () => [state, updateState, resetState] as const,
-    [state, updateState, resetState]
+    () => [value, setValue, resetValue] as const,
+    [value, setValue, resetValue]
   );
 };
 
