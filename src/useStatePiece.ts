@@ -21,7 +21,7 @@ const useStatePiece = <T>(base: string, initialValue: T, region = 'root') => {
         baseRef.current,
         initialValueRef.current
       ) ?? initialValueRef.current,
-    []
+    [contextHolder]
   );
 
   const initialValueMemo = useMemo(
@@ -30,7 +30,7 @@ const useStatePiece = <T>(base: string, initialValue: T, region = 'root') => {
         baseRef.current,
         initialValueRef.current
       ) ?? initialValueRef.current,
-    []
+    [contextHolder]
   );
 
   const value = useMemo(
