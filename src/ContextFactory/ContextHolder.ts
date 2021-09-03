@@ -13,7 +13,7 @@ export default class ContextHolder {
 
   private defaultState: ContextStateType = {};
 
-  constructor(contextHolder?: ContextHolder) {
+  constructor(contextHolder?: ContextHolder, displayName?: string) {
     if (contextHolder) {
       this.context = contextHolder.context;
       this.defaultState = contextHolder.defaultState;
@@ -23,6 +23,10 @@ export default class ContextHolder {
         () => {},
         null,
       ] as ContextRegionDataType);
+    }
+
+    if (displayName) {
+      this.context.displayName = displayName;
     }
   }
 

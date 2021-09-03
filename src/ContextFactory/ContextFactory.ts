@@ -1,14 +1,14 @@
 import ContextHolder from './ContextHolder';
 import ContextHolderClone from './ContextHolderClone';
 
-export default class ContextFactory {
+class ContextFactory {
   private static contexts: Record<string, ContextHolder> = {
-    root: new ContextHolder(),
+    root: new ContextHolder(undefined, 'root'),
   };
 
   private static getContextHolder = (region: string) => {
     if (!ContextFactory.contexts[region]) {
-      ContextFactory.contexts[region] = new ContextHolder();
+      ContextFactory.contexts[region] = new ContextHolder(undefined, region);
     }
 
     return ContextFactory.contexts[region];
@@ -28,3 +28,5 @@ export default class ContextFactory {
     value: T
   ) => ContextFactory.getContextHolder(region).setDefaultValue(base, value);
 }
+
+export default ContextFactory;
