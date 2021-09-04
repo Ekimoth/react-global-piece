@@ -1,11 +1,11 @@
 {
   "name": "react-pieceful-state",
-  "version": "1.3.0",
+  "version": "1.3.2",
   "description": "A ridiculously tiny library for global and regional state management in React",
   "main": "./lib/cjs/index.js",
   "module": "./lib/esm/index.js",
   "types": "./lib/esm/index.d.ts",
-  "repository": "https://github.com/Ekimoth/react-global-state.git",
+  "repository": "https://github.com/Ekimoth/react-pieceful-state.git",
   "author": "Vladimir Dimitrovski <v.tremula@gmail.com>",
   "license": "MIT",
   "files": ["/lib"],
