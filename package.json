@@ -1,6 +1,6 @@
 {
   "name": "react-pieceful-state",
-  "version": "1.3.2",
+  "version": "1.3.3",
   "description": "A ridiculously tiny library for global and regional state management in React",
   "main": "./lib/cjs/index.js",
   "module": "./lib/esm/index.js",
